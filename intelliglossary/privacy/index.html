@@ -32,7 +32,7 @@
     <h2>2. Information the app processes</h2>
     <p>Depending on the features your organization uses, IntelliGlossary may process:</p>
     <ul>
-      <li><strong>Glossary content:</strong> terms, definitions, aliases, categories, status, language, scope, source references, discovery candidates, relevant page excerpts, ignored terms, imported records, and configuration settings.</li>
+      <li><strong>Glossary content:</strong> terms, definitions, aliases, categories, status, language, glossary space (Space or Site-wide), source references, discovery candidates, relevant page excerpts, ignored terms, imported records, and configuration settings.</li>
       <li><strong>User references:</strong> Atlassian account identifiers and display information needed to identify glossary administrators, reviewers, creators, and people performing audited actions.</li>
       <li><strong>Usage and audit information:</strong> app actions, timestamps, AI job progress, and rate-limit records used to operate, secure, and troubleshoot the service.</li>
       <li><strong>AI configuration:</strong> provider choice, model and endpoint settings, and—if supplied by your organization—an API key or token stored using Forge secret storage.</li>
@@ -43,7 +43,7 @@
     <p>We process this information to provide glossary management and discovery, permissions and review workflows, import and export, auditing, optional definition suggestions, security, diagnostics, and customer support. We do not use customer content to build advertising profiles or sell it to third parties.</p>
 
     <h2>4. Storage, tenant separation, and security</h2>
-    <p>IntelliGlossary uses Atlassian Forge hosted storage for its core data. Atlassian scopes hosted app data to each installation and encrypts it at rest. LH Technology does not operate a separate application database for core IntelliGlossary content.</p>
+    <p>IntelliGlossary uses Atlassian Forge hosted storage for its core data. Atlassian separates hosted app data by installation and encrypts it at rest. LH Technology does not operate a separate application database for core IntelliGlossary content.</p>
     <p>We apply access controls in the app based on Confluence access and IntelliGlossary roles. No internet service can be guaranteed completely secure, but we limit the information processed and use the security controls provided by Forge.</p>
 
     <h2>5. Optional AI Definition Assistant</h2>
