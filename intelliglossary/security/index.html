@@ -1,0 +1,65 @@
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>IntelliGlossary — Security Policy</title>
+<link rel="icon" type="image/png" href="/atlassian-apps/favicon.png">
+<meta name="description" content="Security policy for IntelliGlossary for Confluence Cloud.">
+<style>body{max-width:48rem;margin:3rem auto;padding:0 1rem;font:16px/1.6 system-ui,sans-serif;color:#222}h1,h2{line-height:1.25}h1{margin-bottom:.3rem}h2{margin-top:2rem}code{background:#f4f4f5;padding:.1em .3em;border-radius:3px}.callout{background:#f5f7f9;border-left:3px solid #0c66e4;padding:.7em 1em;margin:1em 0}li+li{margin-top:.45rem}a{color:#0c66e4}</style>
+
+<h1>IntelliGlossary — Security Policy</h1>
+<p><strong>Last updated:</strong> 8 August 2026</p>
+
+<p>This policy describes how LH Buyer Technology LLC protects IntelliGlossary for
+Confluence Cloud and how to report a suspected vulnerability.</p>
+
+<h2>Reporting a vulnerability</h2>
+<p>Please report suspected vulnerabilities privately to
+<a href="mailto:lhbuyertech@gmail.com">lhbuyertech@gmail.com</a> rather than in a public
+issue tracker. We aim to acknowledge reports within one business day.</p>
+<p>Please include:</p>
+<ul>
+  <li>A clear description of the issue and its impact.</li>
+  <li>Reproduction steps, a proof of concept, or a sample payload.</li>
+  <li>The Atlassian site URL and app version where you reproduced it.</li>
+  <li>Whether you are an Atlassian tenant administrator, contributor, or third party.</li>
+</ul>
+<p>We coordinate disclosure timelines with Atlassian's Marketplace security process and
+the <a href="https://www.atlassian.com/trust">Atlassian Trust Center</a>. Please allow a
+reasonable window to triage and patch before public disclosure.</p>
+
+<h2>Security architecture</h2>
+<ul>
+  <li>The app runs inside the Atlassian Forge sandbox. Core app storage remains in Forge
+      KVS on the customer's tenant.</li>
+  <li>Forge KVS data is encrypted at rest by Atlassian. The app does not operate an
+      out-of-tenant data store.</li>
+  <li>The app has no Confluence page-write scope and no SMTP egress.</li>
+  <li>Configured AI provider keys are stored in Forge encrypted secrets and are never
+      returned to the browser.</li>
+  <li>AI egress is opt-in per installation. Requests contain only a short bounded page
+      excerpt and the term being drafted—not the full page, actor account ID, or user
+      identifier.</li>
+  <li>Customer-configured AI endpoints require the Connected Apps consent flow and are
+      stored per installation.</li>
+  <li>Resolver write operations enforce server-side role and scope checks.</li>
+  <li>Audit entries record term, settings, and discovery changes with actor, scope,
+      timestamp, and reason.</li>
+</ul>
+
+<h2>AI provider transfer safeguards</h2>
+<p>AI is disabled by default. When enabled, data may be sent to the selected provider.
+For provider-specific DPA, SCC, and international-transfer conditions, see the
+<a href="https://github.com/hankok/atlassian-apps/blob/main/confluence-glossary/docs/DATA-TRANSFER-SAFEGUARDS.md">International Data Transfer Safeguards register</a>.</p>
+
+<h2>Out of scope</h2>
+<p>The following should be filed as normal support requests rather than security reports:</p>
+<ul>
+  <li>Feature requests or behavior changes.</li>
+  <li>Confluence platform issues unrelated to this app.</li>
+  <li>Third-party AI provider outages.</li>
+  <li>Performance, UI, or terminology-rule questions.</li>
+</ul>
+
+<p><a href="../privacy/">Privacy Policy</a> ·
+<a href="../terms/">Terms of Use</a> ·
+<a href="../">IntelliGlossary User Manual</a></p>
