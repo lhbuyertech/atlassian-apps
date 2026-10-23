@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Security policy for IntelliDiagram for Confluence Cloud.">
+  <link rel="icon" type="image/png" href="/atlassian-apps/favicon.png">
+  <title>IntelliDiagram Security Policy | LH Buyer Technology</title>
+  <style>
+    :root{--ink:#172b4d;--muted:#44546f;--line:#dcdfe4;--accent:#1868db;--accent-soft:#e9f2ff;--blue:#0c66e4;--page:#f7f8f9;--card:#fff}
+    *{box-sizing:border-box}body{margin:0;background:var(--page);color:var(--ink);font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+    a{color:var(--blue)}.topbar{height:8px;background:var(--accent)}header,main,footer{max-width:920px;margin:auto}header{padding:52px 28px 28px}.brand{display:flex;align-items:center;gap:13px;font-weight:750;font-size:19px;color:var(--ink);text-decoration:none}.mark{display:grid;place-items:center;width:42px;height:42px;border-radius:11px;background:var(--accent);color:#fff;font-weight:850}.eyebrow{margin:42px 0 5px;color:var(--muted);font-size:14px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}h1{margin:0;font-size:clamp(34px,6vw,54px);line-height:1.1;letter-spacing:-.035em}header p{max-width:720px;color:var(--muted);font-size:18px}main{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:44px 54px;box-shadow:0 8px 30px rgba(9,30,66,.07)}h2{margin:38px 0 8px;font-size:23px;line-height:1.3}h2:first-of-type{margin-top:0}h3{margin:22px 0 6px;font-size:18px}p,li{color:#2c3e5d}ul{padding-left:23px}li+li{margin-top:7px}code{padding:2px 5px;border-radius:4px;background:#f1f2f4;font-size:.93em}.meta{display:flex;flex-wrap:wrap;gap:8px 22px;color:var(--muted);font-size:14px}.summary{margin:0 0 38px;padding:20px 22px;border-left:5px solid var(--accent);border-radius:8px;background:var(--accent-soft)}.notice{padding:16px 18px;border:1px solid var(--line);border-radius:8px;background:#f7f8f9}table{border-collapse:collapse;width:100%;margin-top:16px}th,td{border:1px solid var(--line);padding:11px 13px;text-align:left;vertical-align:top}th{background:#f7f8f9}footer{padding:30px 28px 60px;color:var(--muted);font-size:14px}.footer-row{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}@media(max-width:680px){header{padding-top:36px}main{border-width:1px 0;border-radius:0;padding:32px 24px}h2{font-size:21px}table{font-size:14px;display:block;overflow-x:auto}}
+  </style>
+</head>
+<body>
+  <div class="topbar"></div>
+  <header>
+    <a class="brand" href="../"><span class="mark" aria-hidden="true">ID</span><span>IntelliDiagram</span></a>
+    <div class="eyebrow">Trust</div>
+    <h1>Security Policy</h1>
+    <p>How LH Buyer Technology LLC protects IntelliDiagram for Confluence Cloud, and how to report a suspected vulnerability.</p>
+    <div class="meta"><span><strong>Last updated:</strong> October 9, 2026</span><span><strong>Provider:</strong> LH Buyer Technology LLC</span></div>
+  </header>
+  <main>
+    <div class="notice"><strong>Report a vulnerability</strong><br>Email <a href="mailto:security@lhbuyertech.us">security@lhbuyertech.us</a> rather than using a public issue tracker. We aim to acknowledge reports within one business day.</div>
+
+    <h2>Reporting a vulnerability</h2>
+    <p>Please include:</p>
+    <ul>
+      <li>A clear description of the issue and its impact.</li>
+      <li>Reproduction steps, a proof of concept, or a sample diagram source.</li>
+      <li>The Atlassian site URL and app version where you reproduced it.</li>
+      <li>Whether you are an Atlassian tenant administrator, a page author, or a third party.</li>
+    </ul>
+    <p>We coordinate disclosure timelines with Atlassian's Marketplace security process and follow the Atlassian Marketplace Security Bug Fix Policy. Please allow a reasonable window to triage and patch before public disclosure.</p>
+
+    <h2>Security architecture</h2>
+    <ul>
+      <li><strong>Runs on Atlassian Forge.</strong> The App's backend runs in the Forge sandbox and its interface in Forge's isolated Custom UI frames.</li>
+      <li><strong>No data store.</strong> The App uses no Forge storage and no external database. Diagram source is saved in the page as macro parameters; converted images are ordinary page attachments.</li>
+      <li><strong>No data egress.</strong> The manifest declares no external fetch domains and no remote backends, so the platform blocks the App from contacting anything outside Atlassian. Rendering happens in the user's browser.</li>
+      <li><strong>User-scoped access only.</strong> Every Confluence request is made as the signed-in user, so the App can never read or change something that user could not. The App never acts with its own elevated identity.</li>
+      <li><strong>Least-privilege scopes.</strong> <code>read:page:confluence</code>, <code>read:space:confluence</code>, <code>write:page:confluence</code>, and <code>write:confluence-file</code>. The last is needed only to attach a converted image; Confluence offers no narrower scope for uploading an attachment.</li>
+      <li><strong>Untrusted input is sanitized.</strong> Diagram source is treated as untrusted. Mermaid runs in its strict security mode with HTML labels disabled, Markdown is rendered with raw HTML disabled, and all rendered SVG and HTML passes through DOMPurify before it reaches the page.</li>
+      <li><strong>Server-side validation.</strong> Before a converted image is attached, the backend re-checks the page identifier, the size, and that the file really is a PNG or a script-free SVG, regardless of what the browser sent.</li>
+      <li><strong>No secrets.</strong> The App holds no API keys, tokens, or credentials, and never asks for Atlassian account credentials.</li>
+      <li><strong>Supported runtime and dependencies.</strong> The backend runs on a current Node.js LTS runtime. Dependencies are audited before each release.</li>
+    </ul>
+
+    <h2>Content security policy</h2>
+    <p>IntelliDiagram requests two content-security relaxations for its own sandboxed frames, both required by the bundled rendering libraries and neither granting any network access:</p>
+    <ul>
+      <li><strong>Inline styles.</strong> Mermaid expresses a diagram's colors and layout as styles inside the SVG it generates. Without this, every shape renders solid black.</li>
+      <li><strong>WebAssembly compilation.</strong> Graphviz is bundled as a WebAssembly module, which browsers will only compile when script evaluation is permitted. The App itself does not call <code>eval</code> or build code from diagram source, and loads no script from outside its own bundle.</li>
+    </ul>
+
+    <h2>Out of scope</h2>
+    <p>The following should be filed as normal support requests rather than security reports:</p>
+    <ul>
+      <li>Feature requests or behavior changes.</li>
+      <li>Confluence platform issues unrelated to this App.</li>
+      <li>Diagram syntax that an upstream library does not support.</li>
+      <li>Performance or appearance questions.</li>
+    </ul>
+  </main>
+  <footer><div class="footer-row"><span>© 2026 LH Buyer Technology LLC</span><span><a href="../">User Manual</a> · <a href="../privacy/">Privacy Policy</a> · <a href="../terms/">Terms of Use</a> · <a href="../security/">Security Policy</a> · <a href="../dpa/">Data Processing Addendum</a> · <a href="../support/">Support</a></span></div></footer>
+</body>
+</html>
